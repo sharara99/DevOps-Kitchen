@@ -5,15 +5,65 @@ provider "aws" {
   profile = "default"
 }
 
+
+# create variables
+variable "Environment" {}
+variable "vpc_cidr_block" {}
+variable "subnet_cidr_block" {}
+variable "Owner" {}
+
 # create AWS-vpc 
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "vpc1" {
+  cidr_block = var.vpc_cidr_block
+
+  tags = {
+    Name        = "vpc1"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
 
 }
 
-#create AWS-subnet
-resource "aws_subnet" "main" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.10.0/24"
+#create AWS-subnet from vpc1 
+resource "aws_subnet" "subnet1" {
+  vpc_id            = aws_vpc.vpc1.id
+  cidr_block        = var.subnet_cidr_block
   availability_zone = "us-east-1a"
+
+  tags = {
+    Name        = "subnet1"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
 }
+
+# create a AWS internet Getway 
+resource "aws_internet_gateway" "gateway1" {
+  vpc_id = aws_vpc.vpc1.id
+
+  tags = {
+    Name        = "getway1"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
+}
+
+# create a AWS Route Table 
+resource "aws_route_table" "route_table1" {
+  vpc_id = aws_vpc.vpc1.id
+
+  # Route all traffic to the internet that's way we add (0.0.0.0/0)
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gateway1.id
+  }
+
+  tags = {
+    Name        = "route_table1"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
+
+}
+
+
