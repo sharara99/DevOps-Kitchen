@@ -1,2 +1,2 @@
-Environment       = "terraformChamps"
-Owner             = "Mahmoud Sharara"
+Environment = "terraformChamps"
+Owner       = "Mahmoud Sharara"
