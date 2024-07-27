@@ -14,12 +14,12 @@ variable "Owner" {}
 
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
-  bucket              = "s3-bucket-state-file"
+  bucket              = "s3-sharara-dev"
   force_destroy       = true
   object_lock_enabled = false
 
   tags = {
-    Name        = "Shararastatefiles"
+    Name        = "s3-sharara-dev"
     Environment = var.Environment
     Owner       = var.Owner
   }
@@ -40,12 +40,6 @@ resource "aws_s3_bucket_ownership_controls" "control1" {
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
-}
-
-# Disable ACL for the S3 bucket
-resource "aws_s3_bucket_acl" "acl" {
-  bucket = aws_s3_bucket.bucket1.id
-  acl    = "private"
 }
 
 # Create a directory under the S3 bucket called "(e.g. /log, /outgoing, /incomming)"
