@@ -1,6 +1,9 @@
-# ignore state files
-*state*
-
 # Ignore .terrafrom file
 .terraform
 .terraform*
+terraform.tfstate*
+
+
+# ignore state files
+*state*
+
