@@ -6,5 +6,3 @@
 # ignore state files
 *state*
 
-# ignore priver scurity key
-terraform.tfvars
