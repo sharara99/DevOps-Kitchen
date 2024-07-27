@@ -1,3 +1,4 @@
+# This resource defines a lifecycle policy for the S3 bucket to manage objects with a specific prefix.
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_policy" {
   bucket = aws_s3_bucket.bucket1.id
 
