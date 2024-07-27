@@ -6,4 +6,3 @@ rm -rf terraform.tfstate
 rm -rf terraform.tfstate.*
 rm -rf .terraform 
 rm -rf .terraform.*
-rm -rf mykey.pem
