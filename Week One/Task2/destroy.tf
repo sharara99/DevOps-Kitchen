@@ -3,7 +3,6 @@ resource "null_resource" "cleanup" {
     when    = destroy
     command = <<EOT
       bash ./rm-tf.sh
-      rm -f ./mykey.pem
     EOT
   }
 
