@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "bucket1" {
   object_lock_enabled = false
 
   tags = {
-    Name        = "s3-sharara-dev"
+    Name        = "erakiterrafromstatefiles"
     Environment = var.Environment
     Owner       = var.Owner
   }
