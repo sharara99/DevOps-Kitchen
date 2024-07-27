@@ -50,9 +50,10 @@ resource "aws_s3_bucket_acl" "acl" {
 }
 
 # Create a directory under the S3 bucket called "logs"
-resource "aws_s3_bucket_object" "logs_dir" {
+resource "aws_s3_object" "logs_dir" {
   bucket = aws_s3_bucket.bucket1.id
   key    = "logs/"
+  depends_on = [ aws_s3_bucket.bucket1 ]
 }
 
 
