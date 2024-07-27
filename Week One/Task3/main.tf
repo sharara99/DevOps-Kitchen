@@ -5,12 +5,9 @@ provider "aws" {
   profile = "default"
 }
 
-
 # Create variables for environment and owner
 variable "Environment" {}
 variable "Owner" {}
-
-
 
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
