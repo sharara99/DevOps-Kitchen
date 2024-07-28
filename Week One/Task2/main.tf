@@ -1,7 +1,6 @@
-
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
-  bucket              = "s3-sharara-dev1"
+  bucket              = "s3-sharara-dev"
   force_destroy       = true
   object_lock_enabled = false
 
@@ -15,10 +14,10 @@ resource "aws_s3_bucket" "bucket1" {
 # Enable versioning for the S3 bucket
 resource "aws_s3_bucket_versioning" "versioning_bucket1" {
   bucket = aws_s3_bucket.bucket1.id
+
   versioning_configuration {
     status = "Enabled"
   }
-
 }
 
 # Configure ownership controls for the S3 bucket
@@ -26,8 +25,8 @@ resource "aws_s3_bucket_ownership_controls" "control1" {
   bucket = aws_s3_bucket.bucket1.id
 
   rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
+    object_ownership = "BucketOwnerEnforced"  
+    }
 }
 
 # Create a directory under the S3 bucket called "logs"
@@ -36,28 +35,32 @@ resource "aws_s3_object" "logs_dir" {
   key    = "logs/"
 }
 
-# Provide bucket policy permission for your IAM user to upload objects only under logs
-# terraform here is tha IAM user and have S3 full access
+# Retrieve IAM user for policy attachment
 data "aws_iam_user" "logs_user" {
-  user_name = "logs_user"  
+  user_name = "terraform"
 }
 
-# Provide bucket policy permission for your IAM user to upload objects only under logs
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.bucket1.id
+# Define a policy allowing delete object actions in S3
+resource "aws_iam_policy" "logs_user_policy" {
+  name        = "logs_user_policy"
+  description = "Policy for S3 delete access"
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Sid       = "AllowUserToUploadLogs"
-        Effect    = "Allow"
-        Principal = {
-          AWS = data.aws_iam_user.logs_user.arn
-        }
-        Action    = "s3:PutObject"
-        Resource  = "${aws_s3_bucket.bucket1.arn}/logs/*"
+        Effect = "Allow",
+        Action = [
+          "s3:DeleteObject"
+        ],
+        Resource = "arn:aws:s3:::erakiterrafromstatefiles/*"
       }
     ]
   })
+}
+
+# Attach the policy to the IAM user
+resource "aws_iam_user_policy_attachment" "logs_user_attachment" {
+  user       = data.aws_iam_user.logs_user.user_name
+  policy_arn = aws_iam_policy.logs_user_policy.arn
 }
