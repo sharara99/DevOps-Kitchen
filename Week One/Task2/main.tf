@@ -1,11 +1,11 @@
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
-  bucket              = "s3-sharara-dev"
+  bucket              = "s3-sharara-bct"
   force_destroy       = true
   object_lock_enabled = false
 
   tags = {
-    Name        = "erakiterrafromstatefiles"
+    Name        = "s3-sharara-bct"
     Environment = var.Environment
     Owner       = var.Owner
   }
@@ -53,7 +53,7 @@ resource "aws_iam_policy" "logs_user_policy" {
         Action = [
           "s3:DeleteObject"
         ],
-        Resource = "arn:aws:s3:::erakiterrafromstatefiles/*"
+        Resource = "arn:aws:s3:::s3-sharara-bct/*"
       }
     ]
   })
