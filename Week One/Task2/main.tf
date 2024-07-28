@@ -1,14 +1,3 @@
-# Configure the AWS Provider
-provider "aws" {
-  region = "us-east-1"
-  profile = "default"
-}
-
-# Create variables for environment and owner
-variable "Environment" {}
-variable "Owner" {}
-
-
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
   bucket              = "s3-sharara-dev"
@@ -44,13 +33,12 @@ resource "aws_s3_bucket_ownership_controls" "control1" {
 resource "aws_s3_object" "logs_dir" {
   bucket = aws_s3_bucket.bucket1.id
   key    = "logs/"
-  depends_on = [ aws_s3_bucket.bucket1 ]
 }
 
 # Provide bucket policy permission for your IAM user to upload objects only under logs
 # terraform here is tha IAM user and have S3 full access
-data "aws_iam_user" "terraform_user" {
-  user_name = "terraform"  
+data "aws_iam_user" "logs_user" {
+  user_name = "logs_user"  
 }
 
 # Provide bucket policy permission for your IAM user to upload objects only under logs
@@ -64,7 +52,7 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
         Sid       = "AllowUserToUploadLogs"
         Effect    = "Allow"
         Principal = {
-          AWS = data.aws_iam_user.terraform_user.arn
+          AWS = data.aws_iam_user.logs_user.arn
         }
         Action    = "s3:PutObject"
         Resource  = "${aws_s3_bucket.bucket1.arn}/logs/*"
