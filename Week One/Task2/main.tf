@@ -1,6 +1,7 @@
+
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
-  bucket              = "s3-sharara-dev"
+  bucket              = "s3-sharara-dev1"
   force_destroy       = true
   object_lock_enabled = false
 
