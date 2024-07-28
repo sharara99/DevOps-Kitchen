@@ -1,11 +1,3 @@
-# Define the S3 bucket to store Terraform state
-terraform {
-  backend "s3" {
-    bucket = "erakiterrafromstatefiles"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
-}
 
 # Create an S3 bucket resource
 resource "aws_s3_bucket" "bucket1" {
@@ -34,7 +26,7 @@ resource "aws_s3_bucket_ownership_controls" "control1" {
   bucket = aws_s3_bucket.bucket1.id
 
   rule {
-    object_ownership = "BucketOwnerEnforced"
+    object_ownership = "BucketOwnerPreferred"
   }
 }
 
