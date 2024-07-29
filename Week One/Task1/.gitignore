@@ -7,6 +7,3 @@ terraform.tfstate*
 # ignore state files
 *state*
 
-# ignore Destroy files
-destroy.tf
-rm-tf.sh
