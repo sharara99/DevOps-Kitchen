@@ -13,10 +13,16 @@ resource "aws_iam_user" "mostafa" {
   name = "Mostafa"
 }
 
-# Create IAM Policy for each one of users
+# Create IAM Policy for Ahmed User
 resource "aws_iam_user_policy_attachment" "ahmed_ec2_admin" {
   user       = aws_iam_user.ahmed.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+
+# Create IAM Policy for Mahmoud User
+resource "aws_iam_user_policy_attachment" "mahmoud_s3_policy_attach" {
+  user       = aws_iam_user.mahmoud.name
+  policy_arn = aws_iam_policy.mahmoud_s3_policy.arn
 }
 
 
@@ -32,17 +38,12 @@ resource "aws_iam_policy" "mahmoud_s3_policy" {
         Resource = "arn:aws:s3:::s3-sharara-task4/*",
         Condition = {
           IpAddress = {
-            "aws:SourceIp" = "your-specific-ip-address"  # Replace with the specific source IP
+            "aws:SourceIp" = "10.10.1.0/16"  
           }
         }
       }
     ]
   })
-}
-
-resource "aws_iam_user_policy_attachment" "mahmoud_s3_policy_attach" {
-  user       = aws_iam_user.mahmoud.name
-  policy_arn = aws_iam_policy.mahmoud_s3_policy.arn
 }
 
 resource "aws_iam_role" "mostafa_role" {
@@ -54,9 +55,14 @@ resource "aws_iam_role" "mostafa_role" {
       {
         Effect    = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::your-account-id:user/Mostafa"
+          AWS = "*"
         },
-        Action    = "sts:AssumeRole"
+        Action    = "sts:AssumeRole",
+        Condition = {
+          StringEquals = {
+            "aws:userid" = "${aws_iam_user.mostafa.id}"
+          }
+        }
       }
     ]
   })
