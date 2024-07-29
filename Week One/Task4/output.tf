@@ -17,3 +17,4 @@ output "mostafa_user_arn" {
 output "mostafa_role_arn" {
   value = aws_iam_role.mostafa_role.arn
 }
+

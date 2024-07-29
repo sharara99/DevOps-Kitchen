@@ -76,3 +76,5 @@ resource "aws_iam_role_policy" "mostafa_s3_policy" {
     ]
   })
 }
+
+
