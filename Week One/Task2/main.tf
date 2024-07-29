@@ -18,14 +18,6 @@ resource "aws_s3_bucket_versioning" "versioning_bucket1" {
   }
 }
 
-resource "aws_s3_bucket_ownership_controls" "control1" {
-  bucket = aws_s3_bucket.bucket1.id
-
-  rule {
-    object_ownership = "BucketOwnerEnforced"
-  }
-}
-
 resource "aws_s3_object" "logs_dir" {
   bucket = aws_s3_bucket.bucket1.id
   key    = "logs/"
