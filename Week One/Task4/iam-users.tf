@@ -19,12 +19,6 @@ resource "aws_iam_user_policy_attachment" "ahmed_ec2_admin" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
 }
 
-# Create IAM Policy for Mahmoud User
-resource "aws_iam_user_policy_attachment" "mahmoud_s3_policy_attach" {
-  user       = aws_iam_user.mahmoud.name
-  policy_arn = aws_iam_policy.mahmoud_s3_policy.arn
-}
-
 
 resource "aws_iam_policy" "mahmoud_s3_policy" {
   name        = "mahmoud_s3_policy"
@@ -46,8 +40,13 @@ resource "aws_iam_policy" "mahmoud_s3_policy" {
   })
 }
 
+# Create IAM Policy for Mahmoud User
+resource "aws_iam_user_policy_attachment" "mahmoud_s3_policy_attach" {
+  user       = aws_iam_user.mahmoud.name
+  policy_arn = aws_iam_policy.mahmoud_s3_policy.arn
+}
 
-# Create IAM Role for Mostafa
+# Create IAM Role for mostafa 
 resource "aws_iam_role" "mostafa_role" {
   name = "mostafa_role"
 
@@ -65,6 +64,7 @@ resource "aws_iam_role" "mostafa_role" {
   })
 }
 
+# Create IAM Role Policy for S3 Access for mostafa
 resource "aws_iam_role_policy" "mostafa_s3_policy" {
   name   = "mostafa_s3_policy"
   role   = aws_iam_role.mostafa_role.id
@@ -95,6 +95,7 @@ resource "aws_iam_policy" "mostafa_assume_role_policy" {
     ]
   })
 }
+
 
 resource "aws_iam_user_policy_attachment" "mostafa_assume_role_policy_attachment" {
   user       = aws_iam_user.mostafa.name
