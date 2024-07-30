@@ -1,3 +1,5 @@
+
+# Create S3 bucket with specified name, force_destroy set to true, and tags
 resource "aws_s3_bucket" "bucket1" {
   bucket              = "s3-sharara-task2"
   force_destroy       = true
@@ -10,6 +12,7 @@ resource "aws_s3_bucket" "bucket1" {
   }
 }
 
+# Enable versioning on the S3 bucket
 resource "aws_s3_bucket_versioning" "versioning_bucket1" {
   bucket = aws_s3_bucket.bucket1.id
 
@@ -18,34 +21,39 @@ resource "aws_s3_bucket_versioning" "versioning_bucket1" {
   }
 }
 
+# Create a "logs" directory in the S3 bucket
 resource "aws_s3_object" "logs_dir" {
   bucket = aws_s3_bucket.bucket1.id
   key    = "logs/"
 }
 
-data "aws_iam_user" "logs_user" {
+# Get the IAM user named "terraform"
+data "aws_iam_user" "iam_user" {
   user_name = "terraform"
 }
 
-resource "aws_iam_policy" "logs_user_policy" {
-  name        = "logs_user_policy"
-  description = "Policy for S3 delete access"
+# Create policy document for the IAM user to allow upload only under logs/
+data "aws_iam_policy_document" "upload_object_to_logs" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [data.aws_iam_user.iam_user.arn] 
+    }
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "s3:DeleteObject"
-        ],
-        Resource = "arn:aws:s3:::s3-sharara-bct/*"
-      }
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
     ]
-  })
+
+    resources = [
+      aws_s3_bucket.bucket1.arn,
+      "${aws_s3_bucket.bucket1.arn}/logs/*",
+    ]
+  }
 }
 
-resource "aws_iam_user_policy_attachment" "logs_user_attachment" {
-  user       = data.aws_iam_user.logs_user.user_name
-  policy_arn = aws_iam_policy.logs_user_policy.arn
+# Create bucket policy by mentioning the policy document
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.bucket1.id
+  policy = data.aws_iam_policy_document.upload_object_to_logs.json
 }
