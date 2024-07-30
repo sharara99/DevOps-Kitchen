@@ -35,7 +35,7 @@ resource "aws_iam_policy" "mahmoud_s3_policy" {
       {
         Effect   = "Allow",
         Action   = ["s3:PutObject", "s3:GetObject"],
-        Resource = "arn:aws:s3:::s3-sharara-task4/*",
+        Resource = [aws_s3_bucket.bucket1.arn]
         Condition = {
           IpAddress = {
             "aws:SourceIp" = "10.10.1.0/16"  
@@ -46,6 +46,8 @@ resource "aws_iam_policy" "mahmoud_s3_policy" {
   })
 }
 
+
+# Create IAM Role for Mostafa
 resource "aws_iam_role" "mostafa_role" {
   name = "mostafa_role"
 
@@ -55,14 +57,9 @@ resource "aws_iam_role" "mostafa_role" {
       {
         Effect    = "Allow",
         Principal = {
-          AWS = "*"
+          AWS = aws_iam_user.mostafa.arn
         },
-        Action    = "sts:AssumeRole",
-        Condition = {
-          StringEquals = {
-            "aws:userid" = "${aws_iam_user.mostafa.id}"
-          }
-        }
+        Action    = "sts:AssumeRole"
       }
     ]
   })
@@ -77,10 +74,29 @@ resource "aws_iam_role_policy" "mostafa_s3_policy" {
       {
         Effect   = "Allow",
         Action   = ["s3:GetObject"],
-        Resource = "arn:aws:s3:::s3-sharara-task4/*"
+        Resource = "${aws_s3_bucket.bucket1.arn}/*" # Ensure to append /* to allow access to objects within the bucket
       }
     ]
   })
 }
 
+# Create Policy for Mostafa to Assume the Role
+resource "aws_iam_policy" "mostafa_assume_role_policy" {
+  name        = "mostafa_assume_role_policy"
+  description = "Policy to allow Mostafa to assume the role"
+  policy      = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "sts:AssumeRole",
+        Resource = aws_iam_role.mostafa_role.arn
+      }
+    ]
+  })
+}
 
+resource "aws_iam_user_policy_attachment" "mostafa_assume_role_policy_attachment" {
+  user       = aws_iam_user.mostafa.name
+  policy_arn = aws_iam_policy.mostafa_assume_role_policy.arn
+}
