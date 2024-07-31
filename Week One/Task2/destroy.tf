@@ -6,5 +6,5 @@ resource "null_resource" "cleanup" {
     EOT
   }
 
-  depends_on = []
+  depends_on = [aws_s3_bucket.bucket1]
 }
