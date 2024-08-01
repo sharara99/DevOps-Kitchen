@@ -35,6 +35,7 @@ resource "aws_iam_policy" "taha_s3_policy" {
   })
 }
 
+# Attach the Taha Role to Policy Taha User
 resource "aws_iam_role_policy_attachment" "taha_policy_attach" {
   role       = aws_iam_role.taha_role.name
   policy_arn = aws_iam_policy.taha_s3_policy.arn
