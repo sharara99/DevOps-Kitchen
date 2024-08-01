@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "s3-sharara-task5"
-    key    = "bucket1.tfstate"
+    key    = "terraform.tfstate"
     region = "us-east-1"
   }
 }
