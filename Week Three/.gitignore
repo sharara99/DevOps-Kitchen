@@ -1,0 +1,11 @@
+# Ignore .terrafrom file
+.terraform
+.terraform*
+terraform.tfstate.backup
+
+# ignore state files
+*state*
+
+# ignore destroy files
+destroy.tf
+rm-tf.sh
