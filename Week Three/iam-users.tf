@@ -7,6 +7,7 @@ resource "aws_iam_user" "taha" {
   name = "Taha"
 }
 
+# Create IAM Role for Taha
 resource "aws_iam_role" "taha_role" {
   name = "TahaRole"
 
@@ -16,12 +17,13 @@ resource "aws_iam_role" "taha_role" {
       Action = "sts:AssumeRole"
       Effect = "Allow"
       Principal = {
-        "AWS" : "${aws_iam_user.taha.arn}"
+        "AWS" = "${aws_iam_user.taha.arn}"
       }
     }]
   })
 }
 
+# Create IAM Policy for Taha to GetObject from logs directory
 resource "aws_iam_policy" "taha_s3_policy" {
   name = "TahaS3Policy"
 
@@ -35,15 +37,28 @@ resource "aws_iam_policy" "taha_s3_policy" {
   })
 }
 
-# Attach the Taha Role to Policy Taha User
-resource "aws_iam_role_policy_attachment" "taha_policy_attach" {
-  role       = aws_iam_role.taha_role.name
-  policy_arn = aws_iam_policy.taha_s3_policy.arn
+# Create a policy to allow Taha to assume the TahaRole
+resource "aws_iam_policy" "taha_assume_role_policy" {
+  name = "TahaAssumeRolePolicy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action   = "sts:AssumeRole"
+      Effect   = "Allow"
+      Resource = "${aws_iam_role.taha_role.arn}"
+    }]
+  })
 }
 
-# Attach the Mostafa Policy to Taha User
-resource "aws_iam_user_policy_attachment" "taha_policy_attachment" {
+# Attach the Assume Role Policy to Taha User
+resource "aws_iam_user_policy_attachment" "taha_assume_role_policy_attachment" {
   user       = aws_iam_user.taha.name
+  policy_arn = aws_iam_policy.taha_assume_role_policy.arn
+}
+
+# Attach the Taha Policy to the Taha Role
+resource "aws_iam_role_policy_attachment" "taha_policy_attach" {
+  role       = aws_iam_role.taha_role.name
   policy_arn = aws_iam_policy.taha_s3_policy.arn
 }
 
@@ -68,3 +83,4 @@ resource "aws_iam_user_policy_attachment" "mostafa_policy_attachment" {
   user       = aws_iam_user.mostafa.name
   policy_arn = aws_iam_policy.mostafa_policy.arn
 }
+
