@@ -83,4 +83,3 @@ resource "aws_iam_user_policy_attachment" "mostafa_policy_attachment" {
   user       = aws_iam_user.mostafa.name
   policy_arn = aws_iam_policy.mostafa_policy.arn
 }
-

@@ -5,11 +5,11 @@ terraform {
       version = "~> 5.58.0"
     }
   }
-  # backend "s3" {
-  #   bucket = "s3-sharara-task6"
-  #   key    = "terraform.tfstate"
-  #   region = "us-east-1"
-  # }
+  backend "s3" {
+    bucket = "s3-sharara-task6"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
 }
 
 provider "aws" {

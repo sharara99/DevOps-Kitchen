@@ -17,4 +17,3 @@ resource "aws_s3_object" "logs_dir" {
   bucket = aws_s3_bucket.bucket1.id
   key    = "logs/"
 }
-
