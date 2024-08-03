@@ -37,29 +37,16 @@ resource "aws_iam_policy" "taha_s3_policy" {
   })
 }
 
-# Create a policy to allow Taha to assume the TahaRole
-resource "aws_iam_policy" "taha_assume_role_policy" {
-  name = "TahaAssumeRolePolicy"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action   = "sts:AssumeRole"
-      Effect   = "Allow"
-      Resource = "${aws_iam_role.taha_role.arn}"
-    }]
-  })
-}
-
 # Attach the access policy to the Taha IAM role
 resource "aws_iam_role_policy_attachment" "taha_policy_attach" {
   role       = aws_iam_role.taha_role.name
   policy_arn = aws_iam_policy.taha_s3_policy.arn
 }
 
-# Attach the role assumption policy to the Taha IAM user
-resource "aws_iam_user_policy_attachment" "taha_assume_role_policy_attachment" {
+# Attach TahaS3Policy directly to Taha User
+resource "aws_iam_user_policy_attachment" "taha_policy_attachment" {
   user       = aws_iam_user.taha.name
-  policy_arn = aws_iam_policy.taha_assume_role_policy.arn
+  policy_arn = aws_iam_policy.taha_s3_policy.arn
 }
 
 # Create IAM Policy for Mostafa to PutObject
