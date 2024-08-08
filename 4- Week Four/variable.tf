@@ -15,8 +15,3 @@ variable "ami" {
   description = "Default AMI ID for Ubuntu Server 24.04 LTS"
 }
 
-# Define the SSH public key to be used
-variable "public_key" {
-  description = "my ssh public key"
-}
-

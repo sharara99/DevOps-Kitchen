@@ -6,4 +6,3 @@ terraform.tfstate*
 
 # ignore state files
 *state*
-

@@ -37,3 +37,4 @@ resource "aws_key_pair" "UbuntuKP" {
     command = "echo '${tls_private_key.pk.private_key_pem}' > ./mykey.pem"
   }
 }
+

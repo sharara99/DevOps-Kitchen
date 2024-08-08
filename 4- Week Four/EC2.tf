@@ -8,4 +8,3 @@ resource "aws_instance" "ubuntu-instance" {
     Name = "Ubuntu-EC2"
   }
 }
-
