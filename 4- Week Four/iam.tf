@@ -16,8 +16,14 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-
+# Attach the IAM Role Policy
 resource "aws_iam_role_policy_attachment" "ec2_role_policy_attachment" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+# Create IAM Instance Profile
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "ec2-instance-profile"
+  role = aws_iam_role.ec2_role.name
 }

@@ -3,18 +3,18 @@ resource "aws_security_group" "UbuntuSG" {
 
   # Inbound rules
   ingress {
-    from_port   = 22 # Allow inbound SSH access on port 22
+    from_port   = 22              # Allow inbound SSH access on port 22
     to_port     = 22
-    protocol    = "tcp"         # Use TCP protocol
-    cidr_blocks = ["0.0.0.0/0"] # Allow access from any IP address
+    protocol    = "tcp"           # Use TCP protocol
+    cidr_blocks = ["0.0.0.0/0"]   # Allow access from any IP address
   }
 
   # Outbound rules
   egress {
-    from_port   = 0 # Allow outbound traffic from any port
+    from_port   = 0               # Allow outbound traffic from any port
     to_port     = 0
-    protocol    = "-1"          # Allow all protocols
-    cidr_blocks = ["0.0.0.0/0"] # Allow traffic to any IP address
+    protocol    = "-1"            # Allow all protocols
+    cidr_blocks = ["0.0.0.0/0"]   # Allow traffic to any IP address
   }
 
   tags = {
@@ -25,8 +25,8 @@ resource "aws_security_group" "UbuntuSG" {
 }
 
 resource "tls_private_key" "pk" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+  algorithm   = "RSA"
+  rsa_bits    = 4096
 }
 
 resource "aws_key_pair" "UbuntuKP" {
@@ -34,7 +34,9 @@ resource "aws_key_pair" "UbuntuKP" {
   public_key = tls_private_key.pk.public_key_openssh
 
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.pk.private_key_pem}' > ./mykey.pem"
+    command = <<EOF
+    echo '${tls_private_key.pk.private_key_pem}' > ./mykey.pem
+    chmod 400 mykey.pem
+    EOF
   }
 }
-

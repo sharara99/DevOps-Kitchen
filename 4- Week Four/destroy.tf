@@ -7,5 +7,5 @@ resource "null_resource" "cleanup" {
     EOT
   }
 
-  depends_on = [aws_s3_bucket.bucket1,aws_instance.ubuntu-instance, aws_key_pair.UbuntuKP]
+  depends_on = [aws_s3_bucket.bucket1, aws_instance.ubuntu-instance, aws_key_pair.UbuntuKP]
 }
