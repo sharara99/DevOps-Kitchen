@@ -61,6 +61,3 @@ Create a diagram of the deployment architecture including:
 - Use variables in your Terraform configuration to avoid hardcoding values.
 - Ensure the RDS instance is publicly accessible for testing with pgAdmin.
 
----
-
-**Good luck with your deployment!** If you have any questions or run into issues, feel free to ask for help.
