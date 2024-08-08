@@ -8,7 +8,7 @@ In this workshop, you will use Infrastructure as Code (IaC) with Terraform to se
 
 1. **Terraform State File**:
    - Use S3 to store the Terraform state file.
-   - Bucket name: `erakiterrafromstatefiles`
+   - Bucket name: `S3-sharara-week4`
    - Specify a unique key for the state file.
 
 2. **S3 Bucket**:
