@@ -1,24 +1,24 @@
-# Define a security group named UbuntuSG
-resource "aws_security_group" "sg-01" {
 
-  # Inbound rules
+# Define a security group named sg-01
+resource "aws_security_group" "sg_01" {
+  vpc_id = aws_vpc.vpc1.id
+
   ingress {
-    from_port   = 5432 # Allow inbound SSH access on port 22
+    from_port   = 5432
     to_port     = 5432
-    protocol    = "tcp"         # Use TCP protocol
-    cidr_blocks = ["0.0.0.0/0"] # Allow access from any IP address
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Outbound rules
   egress {
-    from_port   = 0 # Allow outbound traffic from any port
+    from_port   = 0
     to_port     = 0
-    protocol    = "-1"          # Allow all protocols
-    cidr_blocks = ["0.0.0.0/0"] # Allow traffic to any IP address
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name        = "sg-01`"
+    Name        = "sg-01"
     Environment = var.Environment
     Owner       = var.Owner
   }
