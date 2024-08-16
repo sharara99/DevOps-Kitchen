@@ -19,6 +19,7 @@ resource "aws_db_instance" "postgres" {
   instance_class       = "db.t3.micro"
   db_name              = "postgresqldatabase"
   username             = "postgres"
+  identifier           = "postgres-rds"
   password             = var.db_password
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.name
   vpc_security_group_ids = [aws_security_group.sg_01.id]
