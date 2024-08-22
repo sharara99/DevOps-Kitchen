@@ -7,7 +7,6 @@ resource "null_resource" "cleanup" {
   }
 
   depends_on = [aws_s3_bucket.bucket1,
-                aws_s3_object.logs_dir,
                 aws_subnet.subnet_01,
                 aws_subnet.subnet_02,
                 aws_security_group.sg_01,
