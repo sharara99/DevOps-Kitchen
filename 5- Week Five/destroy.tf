@@ -14,8 +14,7 @@ resource "null_resource" "cleanup" {
                 aws_route_table_association.rt_association_subnet_01,
                 aws_route_table.route_table1,
                 aws_internet_gateway.gateway1,
-                aws_db_subnet_group.rds_subnet_group,
                 aws_db_instance.postgres,
-
+                aws_db_subnet_group.rds_subnet_group
   ]
 }
