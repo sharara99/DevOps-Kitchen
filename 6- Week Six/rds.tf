@@ -1,7 +1,7 @@
 # Create a DB subnet group for RDS
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "rds-subnet-group"
-  subnet_ids = [aws_subnet.subnet_01.id, aws_subnet.subnet_02.id]
+  subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
   tags = {
     Name        = "rds-subnet-group"
@@ -10,7 +10,6 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
   }
 }
 
-# Create a PostgreSQL RDS instance
 resource "aws_db_instance" "postgres" {
   allocated_storage      = 20
   engine                 = "postgres"

@@ -1,41 +1,54 @@
-# Create AWS VPC
+# Create a VPC
 resource "aws_vpc" "vpc1" {
   cidr_block = var.vpc_cidr
 
   tags = {
-    Name        = "vpc-01"
+    Name        = "vpc1"
     Environment = var.Environment
     Owner       = var.Owner
   }
 }
 
-# Create AWS subnet-01
-resource "aws_subnet" "subnet_01" {
-  vpc_id            = aws_vpc.vpc1.id
-  cidr_block        = var.subnet_01_cidr
-  availability_zone = "us-east-1a"
+# Create a public subnet for the bastion host
+resource "aws_subnet" "public_subnet" {
+  vpc_id                  = aws_vpc.vpc1.id
+  cidr_block              = var.subnet_public_cidr
+  availability_zone       = "us-east-1a"
+  map_public_ip_on_launch = true
 
   tags = {
-    Name        = "subnet-01"
+    Name        = "public-subnet"
     Environment = var.Environment
     Owner       = var.Owner
   }
 }
 
-# Create AWS subnet-02
-resource "aws_subnet" "subnet_02" {
+# Create a private subnet for the primary RDS instance
+resource "aws_subnet" "private_subnet_1" {
   vpc_id            = aws_vpc.vpc1.id
-  cidr_block        = var.subnet_02_cidr
+  cidr_block        = var.subnet_private_1_cidr
   availability_zone = "us-east-1b"
 
   tags = {
-    Name        = "subnet-02"
+    Name        = "private-subnet-1"
     Environment = var.Environment
     Owner       = var.Owner
   }
 }
 
-# Create an AWS internet gateway
+# Create a private subnet for the standby RDS instance
+resource "aws_subnet" "private_subnet_2" {
+  vpc_id            = aws_vpc.vpc1.id
+  cidr_block        = var.subnet_private_2_cidr
+  availability_zone = "us-east-1c"
+
+  tags = {
+    Name        = "private-subnet-2"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
+}
+
 resource "aws_internet_gateway" "gateway1" {
   vpc_id = aws_vpc.vpc1.id
 
@@ -46,7 +59,6 @@ resource "aws_internet_gateway" "gateway1" {
   }
 }
 
-# Create an AWS route table
 resource "aws_route_table" "route_table1" {
   vpc_id = aws_vpc.vpc1.id
 
@@ -62,13 +74,8 @@ resource "aws_route_table" "route_table1" {
   }
 }
 
-# Associate route table with subnets
-resource "aws_route_table_association" "rt_association_subnet_01" {
-  subnet_id      = aws_subnet.subnet_01.id
+resource "aws_route_table_association" "rt_association_public_subnet" {
+  subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.route_table1.id
 }
 
-resource "aws_route_table_association" "rt_association_subnet_02" {
-  subnet_id      = aws_subnet.subnet_02.id
-  route_table_id = aws_route_table.route_table1.id
-}
