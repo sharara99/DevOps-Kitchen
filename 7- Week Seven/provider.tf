@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "s3-sharara-week6"
+    bucket = "s3-sharara-week7"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
