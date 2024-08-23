@@ -1,11 +1,11 @@
-Week Six Workshop
+Week Seven Workshop
 
 At the end of the week, submit the following workshop.
 Use IaC Terraform to build the following resource as specified:
 
 * Create a diagram of this deployment.
-* Use S3 to store Terraform statefile using "erakiterrafromstatefiles" bucket.
-* Consider using a different name than others (i.e., specify a unique name for the state file key).
+* Use S3 to store Terraform statefile using "terraform.statefile" bucket.
+* Consider using a unique name for the state file key.
 * Create a VPC called vpc-01.
 * Create Subnets called subnet-01 and subnet-02.
 * Create a Security Group called sg-01:
