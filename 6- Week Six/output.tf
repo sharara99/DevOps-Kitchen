@@ -1,16 +1,34 @@
-# Outputs
 output "vpc_id" {
-  value = aws_vpc.vpc1.id
+  description = "The ID of the VPC (Virtual Private Cloud) created."
+  value       = aws_vpc.vpc1.id
 }
 
-output "subnet_ids" {
-  value = [aws_subnet.subnet_01.id, aws_subnet.subnet_02.id]
+output "public_subnet_id" {
+  description = "The ID of the public subnet within the VPC, used for resources that need internet access."
+  value       = aws_subnet.public_subnet.id
 }
 
-output "security_group_id" {
-  value = aws_security_group.sg_01.id
+output "private_subnet_1_id" {
+  description = "The ID of the first private subnet within the VPC, used for resources that do not require direct internet access."
+  value       = aws_subnet.private_subnet_1.id
 }
 
-output "rds_endpoint" {
-  value = aws_db_instance.postgres.endpoint
+output "private_subnet_2_id" {
+  description = "The ID of the second private subnet within the VPC, used for additional private resources."
+  value       = aws_subnet.private_subnet_2.id
+}
+
+output "db_instance_endpoint" {
+  description = "The endpoint (DNS name) of the RDS instance for connecting to the database."
+  value       = aws_db_instance.postgres.endpoint
+}
+
+output "bastion_instance_id" {
+  description = "The ID of the bastion host instance used for secure access to other resources."
+  value       = aws_instance.bastion.id
+}
+
+output "bastion_public_ip" {
+  description = "The public IP address of the bastion host, used for SSH access from external networks."
+  value       = aws_instance.bastion.public_ip
 }
