@@ -32,10 +32,3 @@ variable "ami" {
   description = "AMI ID for the bastion host"
   type        = string
 }
-
-variable "db_password" {
-  description = "Password for the RDS database"
-  type        = string
-  sensitive   = true
-}
-
