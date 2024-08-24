@@ -28,6 +28,7 @@ resource "aws_db_instance" "postgres" {
   backup_retention_period      = 7      # Set backup retention period to 7 days
   performance_insights_enabled = true
   copy_tags_to_snapshot        = true
+  storage_encrypted            = true
 
   tags = {
     Name        = "postgres-rds"
