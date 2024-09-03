@@ -4,8 +4,8 @@
 
 FrogTech company faces the challenge of automating a manual process for transferring files between two S3 buckets. They use S3 as public storage for external and internal parties, with authentication via IAM credentials. The two main S3 buckets involved are:
 
-1. **frogtech-us-external**
-2. **frogtech-us-internal**
+1. **frogtech-sharara-external**
+2. **frogtech-sharara-internal**
 
 Currently, operators manually move files from one bucket to another, which is inefficient and prone to errors. You are tasked with automating this process using an AWS Lambda function, leveraging the Python `boto3` SDK.
 
