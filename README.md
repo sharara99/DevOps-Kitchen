@@ -19,11 +19,7 @@ I'm excited to dive into this journey to elevate my DevOps skills. Through this 
 
 ### My Weekly Progress
 
-I'll be updating this repository with my weekly tasks and what I've learned:
-
-- **Week 1:** [Link to Task Details](#)
-- **Week 2:** [Link to Task Details](#)
-- **Week 3:** [Link to Task Details](#)
+I'll be updating this repository with my weekly tasks and what I've learned
 
 Stay tuned as I continue to grow and contribute to the DevOps Kitchen Workshop!
 
