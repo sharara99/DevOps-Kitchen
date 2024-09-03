@@ -1,10 +1,7 @@
 # Create S3 buckets
 resource "aws_s3_bucket" "external" {
   bucket = "frogtech-sharara-external"
-
-  force_destroy       = true
-  object_lock_enabled = false
-  acl                 = "private"
+  acl    = "private"
 
   tags = {
     Name        = "frogtech-sharara-external"
@@ -14,10 +11,8 @@ resource "aws_s3_bucket" "external" {
 }
 
 resource "aws_s3_bucket" "internal" {
-  bucket              = "frogtech-sharara-internal"
-  force_destroy       = true
-  object_lock_enabled = false
-  acl                 = "private"
+  bucket = "frogtech-sharara-internal"
+  acl    = "private"
 
   tags = {
     Name        = "frogtech-sharara-internal"
