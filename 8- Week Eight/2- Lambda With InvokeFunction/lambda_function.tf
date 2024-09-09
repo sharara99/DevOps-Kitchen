@@ -13,7 +13,6 @@ resource "aws_lambda_function" "s3_transfer" {
   }
 
 }
-
 resource "aws_lambda_permission" "allow_s3" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
@@ -32,3 +31,4 @@ resource "aws_s3_bucket_notification" "external_bucket_notification" {
 
   depends_on = [aws_lambda_permission.allow_s3]
 }
+
