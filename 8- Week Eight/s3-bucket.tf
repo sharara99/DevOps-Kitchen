@@ -1,11 +1,10 @@
-# Create S3 buckets
+# Create an S3 bucket resource
 resource "aws_s3_bucket" "external" {
-  bucket = "frogtech-sharara-external"
+  bucket = "frogtech-us-external"
 
   force_destroy       = true
   object_lock_enabled = false
   acl                 = "private"
-
   tags = {
     Name        = "frogtech-us-external"
     Environment = var.Environment
@@ -14,14 +13,16 @@ resource "aws_s3_bucket" "external" {
 }
 
 resource "aws_s3_bucket" "internal" {
-  bucket              = "frogtech-sharara-internal"
+  bucket = "frogtech-us-internal"
+
   force_destroy       = true
   object_lock_enabled = false
   acl                 = "private"
-
   tags = {
     Name        = "frogtech-us-internal"
     Environment = var.Environment
     Owner       = var.Owner
   }
 }
+
+
