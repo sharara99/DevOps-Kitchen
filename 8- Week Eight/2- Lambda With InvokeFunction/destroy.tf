@@ -15,7 +15,5 @@ resource "null_resource" "cleanup" {
     aws_lambda_function.s3_transfer,
     aws_lambda_permission.allow_s3,
     aws_s3_bucket_notification.external_bucket_notification
-
-
   ]
 }
