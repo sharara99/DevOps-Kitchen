@@ -1,4 +1,5 @@
 # AWS Lambda File Transfer Automation
+![My Image](https://github.com/sharara99/DevOps-Kitchen/blob/master/8-%20Week%20Eight/2-%20Lambda%20With%20InvokeFunction/lambda-Invok-automated.gif)
 
 This project automates the process of transferring files from an external S3 bucket to an internal S3 bucket using AWS Lambda. The Lambda function is triggered whenever a new file is uploaded to the external bucket.
 
