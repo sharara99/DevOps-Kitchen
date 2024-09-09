@@ -15,6 +15,6 @@ resource "null_resource" "cleanup" {
     aws_cloudwatch_event_rule.s3_event,
     aws_lambda_permission.cloudwatch_permission,
     aws_cloudwatch_event_target.lambda_target
-  
+
   ]
 }

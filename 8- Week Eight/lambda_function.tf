@@ -1,9 +1,9 @@
 resource "aws_lambda_function" "s3_file_mover" {
-  filename         = "lambda_function.zip"
-  function_name    = "s3_file_mover"
-  role             = aws_iam_role.lambda_execution_role.arn
-  handler          = "lambda_function.lambda_handler"
-  runtime          = "python3.8"
+  filename      = "lambda_function.zip"
+  function_name = "s3_file_mover"
+  role          = aws_iam_role.lambda_execution_role.arn
+  handler       = "lambda_function.lambda_handler"
+  runtime       = "python3.8"
 
   environment {
     variables = {
