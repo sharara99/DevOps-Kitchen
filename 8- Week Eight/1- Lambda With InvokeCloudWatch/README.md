@@ -1,6 +1,7 @@
 # Week Eight - Lambda: Manage File Transfer between S3 Buckets
 
 ## Overview
+![My Image](https://github.com/sharara99/DevOps-Kitchen/blob/master/8-%20Week%20Eight/1-%20Lambda%20With%20InvokeCloudWatch/automated.gif)
 
 FrogTech company faces the challenge of automating a manual process for transferring files between two S3 buckets. They use S3 as public storage for external and internal parties, with authentication via IAM credentials. The two main S3 buckets involved are:
 
