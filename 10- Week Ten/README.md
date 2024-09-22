@@ -32,4 +32,3 @@ FrogTech requires the use of high-level HCL language techniques, including:
 2. Resources must have common tags as follows:
    - Key: **Environment**, Value: **terraformChamps**
    - Key: **Owner**, Value: **Your_First_Name**
-
