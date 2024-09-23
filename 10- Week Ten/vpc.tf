@@ -11,6 +11,30 @@ resource "aws_vpc" "main_vpc" {
   }
 }
 
+resource "aws_subnet" "subnet_public_1" {
+  vpc_id     = aws_vpc.main_vpc.id
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 0)
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name        = "subnet-public-1"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
+}
+
+resource "aws_subnet" "subnet_public_2" {
+  vpc_id     = aws_vpc.main_vpc.id
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 1)
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name        = "subnet-public-2"
+    Environment = var.Environment
+    Owner       = var.Owner
+  }
+}
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
 
@@ -46,26 +70,3 @@ resource "aws_route_table_association" "public_route_table_association_2" {
   route_table_id = aws_route_table.public_route_table.id
 }
 
-resource "aws_subnet" "subnet_public_1" {
-  vpc_id     = aws_vpc.main_vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, 0)
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name        = "subnet-public-1"
-    Environment = var.Environment
-    Owner       = var.Owner
-  }
-}
-
-resource "aws_subnet" "subnet_public_2" {
-  vpc_id     = aws_vpc.main_vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, 1)
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name        = "subnet-public-2"
-    Environment = var.Environment
-    Owner       = var.Owner
-  }
-}
