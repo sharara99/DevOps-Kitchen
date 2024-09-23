@@ -7,6 +7,7 @@
 ### Project Overview
 
 FrogTech company wants to test your ability to write clean code by deploying the structure of resources. This project aims to help you build a good reputation while automating processes and configurations on an EFS-mounted disk using internal scripts created by developers.
+![Automated Photo](Invok-automated.gif)
 
 ### Objective
 
